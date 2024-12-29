@@ -6,6 +6,8 @@ ref: https://leetcode.com/problems/combination-sum/solutions/5426168/video-simpl
 
 Type:　recursive / backtracking
 
+# description of the outcome
+
 make_combination adds combinations to the result list res 
 
 only when the current total reaches the target, 
