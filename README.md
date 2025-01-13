@@ -39,9 +39,11 @@ Thanks to these open-source tutorial and resources, I can
 
 - [doocs' Leetcode](https://github.com/doocs/leetcode)
 
-算法
+## others
 
 - [sword to Offer questions](https://github.com/CyC2018/CS-Notes/blob/master/notes/剑指%20Offer%20题解%20-%20目录.md)
 - [Leetcode questions](https://github.com/CyC2018/CS-Notes/blob/master/notes/Leetcode%20题解%20-%20目录.md)
 - [algorithms](https://github.com/CyC2018/CS-Notes/blob/master/notes/算法%20-%20目录.md)
 - [byte dancer](assets/内推.md)
+
+- [](https://github.com/krahets/hello-algo)
