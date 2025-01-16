@@ -45,3 +45,4 @@ class Michael:
     def __init__(self, height, salary):
         self.height = height
         self.salary = salary
+
