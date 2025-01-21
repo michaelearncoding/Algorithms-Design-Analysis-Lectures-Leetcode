@@ -36,3 +36,13 @@ class TreeNode:
 def traverse(root: TreeNode):
     traverse(root.left)
     traverse(root.right)
+
+# N gram tree can also extented to the graph traversal
+# 基本的 N 叉树节点
+class TreeNode:
+    val: int
+    children: List[TreeNode]
+
+def traverse(root: TreeNode) -> None:
+    for child in root.children:
+        traverse(child)
