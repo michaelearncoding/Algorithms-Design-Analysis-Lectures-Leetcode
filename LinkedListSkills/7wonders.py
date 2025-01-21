@@ -32,12 +32,14 @@ class Solution:
 # 单链表的分解
 class Solution:
     def partition(self, head: ListNode, x: int) -> ListNode:
+
         # 存放小于 x 的链表的虚拟头结点
         dummy1 = ListNode(-1)
         # 存放大于等于 x 的链表的虚拟头结点
         dummy2 = ListNode(-1)
         # p1, p2 指针负责生成结果链表
         p1, p2 = dummy1, dummy2
+
         # p 负责遍历原链表，类似合并两个有序链表的逻辑
         # 这里是将一个链表分解成两个链表
         p = head
@@ -60,5 +62,121 @@ class Solution:
         return dummy1.next
 
 
+# 合并 k 个有序链表, 因此有k个各自的最小节点
+# similar to heap!!!! swim & sink methods 
 
+def min_heap_swim(heap, node):
+    # 小顶堆的上浮操作，时间复杂度是树高 O(logN)
+    while node > 0 and heap[parent(node)] > heap[node]:
+        swap(heap, parent(node), node)
+        node = parent(node)
 
+def min_heap_sink(heap, node, size):
+    # 小顶堆的下沉操作，时间复杂度是树高 O(logN)
+    while left(node) < size or right(node) < size:
+        # 比较自己和左右子节点，看看谁最小
+        min_index = node
+        if left(node) < size and heap[left(node)] < heap[min_index]:
+            min_index = left(node)
+        if right(node) < size and heap[right(node)] < heap[min_index]:
+            min_index = right(node)
+        if min_index == node:
+            break
+        # 如果左右子节点中有比自己小的，就交换
+        swap(heap, node, min_index)
+        node = min_index
+
+def max_heap_swim(heap, node):
+    # 大顶堆的上浮操作
+    while node > 0 and heap[parent(node)] < heap[node]:
+        swap(heap, parent(node), node)
+        node = parent(node)
+
+def max_heap_sink(heap, node, size):
+    # 大顶堆的下沉操作
+    while left(node) < size or right(node) < size:
+        # 小顶堆和大顶堆的唯一区别就在这里，比较逻辑相反
+        # 比较自己和左右子节点，看看谁最大
+        max_index = node
+        if left(node) < size and heap[left(node)] > heap[max_index]:
+            max_index = left(node)
+        if right(node) < size and heap[right(node)] > heap[max_index]:
+            max_index = right(node)
+        if max_index == node:
+            break
+        swap(heap, node, max_index)
+        node = max_index
+
+def parent(node):
+    # 父节点的索引
+    return (node - 1) // 2
+
+def left(node):
+    # 左子节点的索引
+    return node * 2 + 1
+
+def right(node):
+    # 右子节点的索引
+    return node * 2 + 2
+
+def swap(heap, i, j):
+    # 交换数组中两个元素的位置
+    heap[i], heap[j] = heap[j], heap[i]
+
+# 具体实现
+
+import heapq
+
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+    # 重载比较运算符，方便将 ListNode 加入最小堆
+    def __lt__(self, other):
+        return self.val < other.val
+
+class Solution:
+    def mergeKLists(self, lists):
+        if not lists:
+            return None
+        # 虚拟头结点
+        dummy = ListNode(-1)
+        p = dummy
+
+        # 优先级队列，最小堆 -> 初始化最小堆:
+        pq = []
+        # 将 k 个链表的头结点加入最小堆
+        for i, head in enumerate(lists):
+            if head is not None:
+                heapq.heappush(pq, (head.val, i, head))
+
+        while pq:
+            # 获取最小节点，接到结果链表中 -》 从最小堆中取出最小的节点，将其加入结果链表。
+            val, i, node = heapq.heappop(pq)
+            p.next = node
+            if node.next is not None: # 如果取出的节点有下一个节点，将下一个节点加入最小堆。
+                heapq.heappush(pq, (node.next.val, i, node.next)) # 将节点的下一个节点加入堆中。
+            # p 指针不断前进
+            p = p.next
+            
+        return dummy.next
+
+# 链表1: 1 -> 4 -> 5
+# 链表2: 1 -> 3 -> 4
+# 链表3: 2 -> 6
+
+lists = [
+    ListNode(1, ListNode(4, ListNode(5))),
+    ListNode(1, ListNode(3, ListNode(4))),
+    ListNode(2, ListNode(6))
+]
+
+solution = Solution()
+merged_list = solution.mergeKLists(lists)
+
+# 打印合并后的链表
+current = merged_list
+while current:
+    print(current.val, end=" -> ")
+    current = current.next
