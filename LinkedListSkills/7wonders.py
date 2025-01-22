@@ -197,5 +197,86 @@ def findFromEnd(head: ListNode, k: int) -> ListNode:
         p2 = p2.next
         p1 = p1.next
     # 若p1 走到了尾节点，p2 正好走到了倒数第 k 个节点
+    # 时间复杂度: 这种方法只需要遍历链表一次，时间复杂度是 (O(n))，其中 (n) 是链表的长度。
     # p2 现在指向第 n - k + 1 个节点，即倒数第 k 个节点
     return p2
+
+
+# 给你一个链表，删除链表的倒数第 n 个结点，并且返回链表的头结点。
+
+# 主函数
+class Solution:
+    def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
+        # 虚拟头结点
+        dummy = ListNode(-1)
+        dummy.next = head
+        # 删除倒数第 n 个，要先找倒数第 n + 1 个节点
+        x = self.findFromEnd(dummy, n + 1)
+
+        # 删掉倒数第 n 个节点
+        x.next = x.next.next
+        return dummy.next
+    
+
+# Middle of the Linked List
+# 单链表的中点
+
+class Solution: # 快慢指针
+    def middleNode(self, head: ListNode) -> ListNode:
+        # 快慢指针初始化指向 head
+        slow, fast = head, head
+        # 快指针走到末尾时停止
+        while fast is not None and fast.next is not None:
+            # 慢指针走一步，快指针走两步
+            slow = slow.next
+            fast = fast.next.next
+        # 慢指针指向中点
+        return slow
+# 需要注意的是，如果链表长度为偶数，也就是说中点有两个的时候，我们这个解法返回的节点是靠后的那个节点。
+
+# 判断链表是否包含环
+class Solution:
+    def hasCycle(self, head: ListNode) -> bool:
+        # 快慢指针初始化指向 head
+        slow, fast = head, head
+        # 快指针走到末尾时停止
+        while fast is not None and fast.next is not None:
+            # 慢指针走一步，快指针走两步
+            slow = slow.next
+            fast = fast.next.next
+            # 快慢指针相遇，说明含有环
+            if slow == fast:
+                return True
+        # 不包含环
+        return False
+
+
+# 寻找环起点
+# 背后有数学原理！
+class Solution:
+    def detectCycle(self, head: ListNode) -> ListNode:
+
+        fast, slow = head, head
+
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next
+            if fast == slow:
+                break
+
+        if not fast or not fast.next:
+            return None
+        
+        slow = head 
+
+        while slow != fast:
+            fast = fast.next
+            slow = slow.next
+        return slow
+    
+
+
+
+
+
+
