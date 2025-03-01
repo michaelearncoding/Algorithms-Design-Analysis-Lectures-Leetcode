@@ -25,9 +25,11 @@ class Solution:
             p = p.next
         
         if p1 is not None:
+            # 把最后剩下的节点接到 p 指针
             p.next = p1
         
         if p2 is not None:
+            # 把最后剩下的节点接到 p 指针
             p.next = p2
         
         return dummy.next
