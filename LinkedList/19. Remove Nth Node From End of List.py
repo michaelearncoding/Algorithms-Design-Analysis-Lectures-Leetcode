@@ -1,6 +1,12 @@
 # https://leetcode.com/problems/remove-nth-node-from-end-of-list/description/
 
 # Ref: 
+# 链表: 1->2->3->4->5，删除倒数第2个节点(节点4)
+# 创建虚拟头节点
+# dummy -> 1 -> 2 -> 3 -> 4 -> 5
+# return dummy.next  # 返回1->2->3->5
+# 这个算法巧妙之处在于使用两个指针的间距来定位倒数第N个节点，只需遍历一次链表。
+
 
 # 返回链表的倒数第 k 个节点
 def findFromEnd(head: ListNode, k: int) -> ListNode:
