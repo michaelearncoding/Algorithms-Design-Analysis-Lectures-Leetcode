@@ -15,3 +15,20 @@ def findFromEnd(head: ListNode, k: int) -> ListNode:
         p1 = p1.next
     # p2 现在指向第 n - k + 1 个节点，即倒数第 k 个节点
     return p2
+
+
+# 主函数
+class Solution:
+    def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
+        # 虚拟头结点
+        dummy = ListNode(-1)
+        dummy.next = head
+        # 删除倒数第 n 个，要先找倒数第 n + 1 个节点
+        x = self.findFromEnd(dummy, n + 1)
+        # 删掉倒数第 n 个节点
+        x.next = x.next.next
+        return dummy.next
+        
+    def findFromEnd(self, head: ListNode, k: int) -> ListNode:
+        # 代码见上文
+        pass
