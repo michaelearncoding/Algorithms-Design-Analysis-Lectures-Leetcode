@@ -13,7 +13,48 @@ print(count)  # 输出2，说明有2个元素（3,4）小于6
 # 二分查找只用于左半边的每个元素，去右半边（已排序）查找比它小的元素个数。
 
 
+def binary_search(arr, target):
+    left, right = 0, len(arr) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == target:
+            return mid  # 找到目标，返回下标
+        elif arr[mid] < target:
+            left = mid + 1  # 去右半边找
+        else:
+            right = mid - 1  # 去左半边找
+    return -1  # 没找到
+
+# 查找第一个大于等于 target 的位置（lower_bound）
+def lower_bound(arr, target):
+    left, right = 0, len(arr)
+    while left < right:
+        mid = (left + right) // 2
+        if arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid
+    return left  # 返回第一个 >= target 的下标
+# 如果你想找有多少个元素小于 target，直接返回 left 就是答案。
+
+# 查找第一个大于 target 的位置（upper_bound）
+def upper_bound(arr, target):
+    left, right = 0, len(arr)
+    while left < right:
+        mid = (left + right) // 2
+        if arr[mid] <= target:
+            left = mid + 1
+        else:
+            right = mid
+    return left  # 返回第一个 > target 的下标
+
+
+
+# 排序的算法
+
+
 '''
+
 merge_sort([5, 2, 4, 1])
   ├─ merge_sort([5, 2])
   │    ├─ merge_sort([5])   ← 入栈
