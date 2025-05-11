@@ -12,7 +12,9 @@ print(count)  # 输出2，说明有2个元素（3,4）小于6
 # 只需要take care第三种情况，就是跨越左右两边的index 对 
 # 二分查找只用于左半边的每个元素，去右半边（已排序）查找比它小的元素个数。
 
-
+# 二分查找
+# 时间复杂度O(logn)
+# 用于查找，计数或者插入等场景
 def binary_search(arr, target):
     left, right = 0, len(arr) - 1
     while left <= right:
@@ -49,6 +51,12 @@ def upper_bound(arr, target):
     return left  # 返回第一个 > target 的下标
 
 
+import bisect
+
+arr = [1, 3, 4, 6, 8]
+x = 5
+print(bisect.bisect_left(arr, x))  # 输出 3，表示有3个元素 < 5
+print(bisect.bisect_right(arr, x)) # 输出 3，表示有3个元素 <= 5
 
 # 排序的算法
 
@@ -102,4 +110,24 @@ def merge(left, right):
     result.extend(left[i:])
     result.extend(right[j:])
     return result
+
+
+
+# https://www.youtube.com/watch?v=xli_FI7CuzA
+# 2分钟冒泡排序
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        # 每一轮把最大的元素“冒泡”到最后
+        for j in range(0, n - i - 1):
+            if arr[j] > arr[j + 1]:
+                # 交换相邻元素
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+    return arr
+
+# 示例
+arr = [5, 2, 4, 1, 3]
+bubble_sort(arr)
+print(arr)  # 输出: [1, 2, 3, 4, 5]
+
 
